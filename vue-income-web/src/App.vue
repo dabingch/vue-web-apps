@@ -1,6 +1,6 @@
 <template>
   <Header :totalIncome="state.totalIncome" />
-  <Form :state="state" @add-income="AddIncome" />
+  <Form :state="state" @add-income="addIncome" />
   <IncomeList :state="state" @remove-item="removeItem" />
 </template>
 
@@ -15,15 +15,15 @@ export default {
   setup () {
     const state = reactive({
       income: [],
-      // sortedIncome: computed(() => {
-      //   let temp = [];
+      sortedIncome: computed(() => {
+        let temp = [];
         
-      //   temp = state.income.sort(function (a, b) {
-      //     return b.date - a.date;
-      //   });
+        temp = state.income.sort(function (a, b) {
+          return b.date - a.date;
+        });
 
-      //   return temp;
-      // }),
+        return temp;
+      }),
       totalIncome: computed(() => {
         let temp = 0;
         if (state.income.length > 0) {
@@ -37,30 +37,27 @@ export default {
       })
     });
 
-    // function AddIncome(obj) {
-    //   let d = obj.date.split("-");
-    //   let newD = new Date(d[0], d[1], d[2]);
+    function addIncome(obj) {
+      let d = obj.date.split("-");
+      let newD = new Date(d[0], d[1], d[2]);
 
-    //   state.income = [...state.income, {
-    //     id: Date.now(),
-    //     desc: obj.desc,
-    //     value: parseInt(obj.value),
-    //     date: newD.getTime()
-    //   }]
-    // }
+      state.income = [...state.income, {
+        id: Date.now(),
+        desc: obj.desc,
+        value: parseInt(obj.value),
+        date: newD.getTime()
+      }]
+    }
 
-    // function removeItem(id) {
-    //   state.income = state.income.filter(v => v.id != id);
-    // }
+    function removeItem(id) {
+      state.income = state.income.filter(v => v.id != id);
+    }
 
     // Return template data
     return {
-      Header,
-      // IncomeList,
-      Form,
       state,
-      // AddIncome,
-      // removeItem
+      addIncome,
+      removeItem
     }
   }
 }
