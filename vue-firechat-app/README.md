@@ -1,5 +1,7 @@
 # vue-firechat-app
 
+(Click here to access the app)[https://vue-firechat-app.netlify.app/]
+
 ## Project setup
 ```
 npm install
@@ -14,11 +16,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
