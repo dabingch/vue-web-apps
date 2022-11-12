@@ -1,6 +1,6 @@
 # vue-firechat-app
 
-(Click here to access the app)[https://vue-firechat-app.netlify.app/]
+[Click here to access firechat app](https://vue-firechat-app.netlify.app/)
 
 ## Project setup
 ```
