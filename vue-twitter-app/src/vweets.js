@@ -3,7 +3,7 @@ export default [
 		_id: "0",
 		author: {
 			profile_img_url:
-				"https://pbs.twimg.com/profile_images/1338824835078778880/3rFQF35B_400x400.jpg",
+				"https://gravatar.com/avatar/4248d1e4c4df5a1a9680f909b618d311?s=400&d=robohash&r=x",
 			display_name: "Tyler Potts",
 			username: "@Tyler_Potts_",
 		},
@@ -35,7 +35,7 @@ export default [
 		_id: "1",
 		author: {
 			profile_img_url:
-				"https://pbs.twimg.com/profile_images/856983737426423809/6jebtwP-_400x400.jpg",
+				"https://gravatar.com/avatar/25818dc98b9596b0d18f690127d30e22?s=400&d=robohash&r=x",
 			display_name: "Brad Traversy",
 			username: "@traversymedia",
 		},
@@ -65,7 +65,7 @@ export default [
 		_id: "2",
 		author: {
 			profile_img_url:
-				"https://pbs.twimg.com/profile_images/595659104384905218/bOtXKmdP_400x400.jpg",
+				"https://gravatar.com/avatar/255faeeffa3914634ff9b9b003f0d366?s=400&d=robohash&r=x",
 			display_name: "Florin Pop",
 			username: "@florinpop1705",
 		},
@@ -103,7 +103,7 @@ export default [
 		_id: "3",
 		author: {
 			profile_img_url:
-				"https://pbs.twimg.com/profile_images/1338824835078778880/3rFQF35B_400x400.jpg",
+				"https://gravatar.com/avatar/4176c4d500552e48d87b58deea19595f?s=400&d=robohash&r=x",
 			display_name: "Tyler Potts",
 			username: "@Tyler_Potts_",
 		},
