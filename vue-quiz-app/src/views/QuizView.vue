@@ -6,19 +6,46 @@
     />
 
     <div>
-      <Question
-        v-if="!showResults"
-        :question="quiz.questions[currentQuestionIndex]"
-        @selectOption="onOptionSelected"
-      />
-      <Result
-        v-else
-        :quizQuestionLength="quiz.questions.length"
-        :numberOfCorrectAnswers="numberOfCorrectAnswers"
-      />
+      <Transition name="fade">
+        <Question
+          v-if="!showResults"
+          :question="quiz.questions[currentQuestionIndex]"
+          @selectOption="onOptionSelected"
+        />
+        <Result
+          v-else
+          :quizQuestionLength="quiz.questions.length"
+          :numberOfCorrectAnswers="numberOfCorrectAnswers"
+        />
+      </Transition>
     </div>
   </div>
 </template>
+
+<style scoped>
+.fade-enter-from {
+  opacity: 0;
+}
+
+.fade-enter-to {
+  opacity: 1;
+}
+
+.fade-enter-active {
+  transition: all 5s ease;
+}
+.fade-leave-from {
+  opacity: 1;
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-leave-active {
+  transition: all 1s ease;
+}
+</style>
 
 <script setup>
 import Question from "../components/Question.vue";
