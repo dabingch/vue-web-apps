@@ -5,7 +5,14 @@
       <input type="text" v-model.trim="search" placeholder="Search..." />
     </header>
     <div class="options-container">
-      <Card v-for="quiz in quizzes" :key="quiz.id" :quiz="quiz" />
+      <TransitionGroup appear @before-enter="beforeEnter" @enter="enter">
+        <Card
+          v-for="(quiz, index) in quizzes"
+          :key="quiz.id"
+          :quiz="quiz"
+          :data-index="index"
+        />
+      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -14,6 +21,7 @@
 import q from "../data/quizzes.json";
 import { ref, watch } from "vue";
 import Card from "../components/Card.vue";
+import gsap from "gsap";
 
 const quizzes = ref(q);
 const search = ref("");
@@ -23,6 +31,20 @@ watch(search, () => {
     quiz.name.toLowerCase().includes(search.value.toLowerCase())
   );
 });
+
+const beforeEnter = (el) => {
+  el.style.opacity = 0;
+  el.style.transform = "translateY(-100px)";
+};
+
+const enter = (el) => {
+  gsap.to(el, {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    delay: el.dataset.index * 0.3,
+  });
+};
 </script>
 
 <style scoped>
