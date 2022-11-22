@@ -4,7 +4,7 @@
       :questionStatus="questionStatus"
       :barPercentage="barPercentage"
     />
-
+    <!-- TransitionGroup for multiple components -->
     <div>
       <Transition name="fade">
         <Question
