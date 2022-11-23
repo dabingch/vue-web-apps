@@ -7,8 +7,17 @@
           :key="character.char_id"
           :image="character.img"
           :name="character.name"
-          :occupation="character.occupation"
-        />
+        >
+          <!-- slot html -->
+          <div class="jobs">
+            <p v-for="(job, index) in character.occupation" :key="index">
+              {{ job
+              }}<span v-if="index < character.occupation.length - 1"
+                >,&nbsp;</span
+              >
+            </p>
+          </div>
+        </Card>
       </div>
 
       <div class="button-container">
@@ -60,10 +69,7 @@ watch(page, async () => {
 .cards p {
   font-size: 10px;
 }
-.jobs {
-  display: flex;
-  flex-wrap: wrap;
-}
+
 .button-container {
   display: flex;
   justify-content: center;
@@ -81,5 +87,14 @@ watch(page, async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+p {
+  font-size: 10px;
+}
+
+.jobs {
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>
