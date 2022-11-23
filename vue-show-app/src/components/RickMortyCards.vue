@@ -33,7 +33,7 @@ watch(page, async () => {
       </Card>
     </div>
     <div v-else class="cards spinner">
-      <NSpin size="large" />
+      <n-spin size="large" />
     </div>
     <div class="button-container">
       <button @click="page--">&lt;</button>
