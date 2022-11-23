@@ -1,7 +1,7 @@
 <template>
   <n-card>
     <template #cover>
-      <img :src=image>
+      <img :src="image" />
     </template>
     <h3>{{ name }}</h3>
     <div class="jobs">
@@ -13,28 +13,29 @@
 </template>
 
 <script setup>
-
 const { image, name, occupation } = defineProps([
-  'image', 'name', 'occupation'
-])
+  "image",
+  "name",
+  "occupation",
+]);
 </script>
 
 <style scoped>
 .n-card {
-    width: 200px;
-    margin:10px 20px;
-    /* height: 300px; */
+  width: 200px;
+  margin: 10px 20px;
+  /* height: 300px; */
 }
 .n-card img {
-    height: 250px
+  height: 250px;
 }
 
 p {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .jobs {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
-</style> 
+</style>

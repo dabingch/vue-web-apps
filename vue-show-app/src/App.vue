@@ -1,5 +1,5 @@
 <script setup>
-import BreakingBadCards from './components/BreakingBadCards.vue';
+import BreakingBadCards from "./components/BreakingBadCards.vue";
 </script>
 
 <template>
@@ -16,6 +16,4 @@ import BreakingBadCards from './components/BreakingBadCards.vue';
   </main>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
