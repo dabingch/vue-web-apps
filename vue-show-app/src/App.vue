@@ -4,7 +4,7 @@ import BreakingBadCards from './components/BreakingBadCards.vue';
 
 <template>
   <main>
-    <h1>Hello World</h1>
+    <h1>Hero</h1>
     <Suspense>
       <template #default>
         <BreakingBadCards />
