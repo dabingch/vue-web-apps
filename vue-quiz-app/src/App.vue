@@ -8,7 +8,6 @@
 
 <script setup>
 import { RouterView } from "vue-router";
-import QuizzesView from "./views/QuizzesView.vue";
 </script>
 
 <style scoped>
