@@ -1,18 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
-enum GENDER {
-  MALE,
-  FEMALE,
-}
+import { ref, computed } from "vue";
+import Card from "./components/Card.vue";
+import { GENDER, type Invitee } from "./types";
 
 const name = ref("");
-
-interface Invitee {
-  id: number;
-  name: string;
-  gender: GENDER;
-}
 
 const addInvitee = (): void => {
   if (name.value) {
@@ -23,6 +14,28 @@ const addInvitee = (): void => {
     });
   }
 };
+
+const count = computed<{
+  female: number;
+  male: number;
+}>(() => {
+  return invitees.value.reduce(
+    (countObj, invitee) => {
+      if (invitee.gender === GENDER.MALE) {
+        return {
+          ...countObj,
+          male: countObj.male + 1,
+        };
+      }
+
+      return {
+        ...countObj,
+        female: countObj.female + 1,
+      };
+    },
+    { male: 0, female: 0 }
+  );
+});
 
 const gender = ref(GENDER.MALE);
 
@@ -44,6 +57,17 @@ const invitees = ref<Invitee[]>([]);
           <option :value="GENDER.MALE">Male</option>
           <option :value="GENDER.FEMALE">Female</option>
         </select>
+      </div>
+      <div class="cards-container">
+        <Card
+          v-for="invitee in invitees"
+          :key="invitee.id"
+          :invitee="invitee"
+        />
+      </div>
+      <div>
+        <p>Females - {{ count.female }}</p>
+        <p>Males - {{ count.male }}</p>
       </div>
     </div>
   </main>
