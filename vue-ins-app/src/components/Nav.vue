@@ -12,8 +12,8 @@
           />
         </div>
         <div class="right-content" v-if="!isAuthenticated">
-          <AuthModal :isLogin="false"/>
-          <AuthModal :isLogin="true"/>
+          <AuthModal :isLogin="false" />
+          <AuthModal :isLogin="true" />
         </div>
         <div class="right-content" v-else>
           <a-button type="primary">Profile</a-button>
@@ -25,17 +25,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
-import Container from "./Container.vue"
-import AuthModal from "./AuthModal.vue"
+import { ref } from "vue";
+import { RouterLink } from "vue-router";
+import Container from "./Container.vue";
+import AuthModal from "./AuthModal.vue";
 
-const searchUsername = ref("")
-const isAuthenticated = ref(false)
+const searchUsername = ref("");
+const isAuthenticated = ref(false);
 
-const onSearch = () => {
-
-}
+const onSearch = () => {};
 </script>
 
 <style scoped>
