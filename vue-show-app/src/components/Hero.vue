@@ -10,6 +10,7 @@
 <script setup>
 const { isBreakingBad } = defineProps(["isBreakingBad"]);
 const emit = defineEmits(["selectShow"]);
+// Define emit function in child component emit(f_name, prop)
 const emitSelectShow = () => {
   emit("selectShow");
 };
