@@ -11,9 +11,13 @@
             @search="onSearch"
           />
         </div>
-        <div class="right-content">
-          <a-button type="primary">Sign Up</a-button>
-          <a-button type="primary">Login</a-button>
+        <div class="right-content" v-if="!isAuthenticated">
+          <AuthModal :isLogin="false"/>
+          <AuthModal :isLogin="true"/>
+        </div>
+        <div class="right-content" v-else>
+          <a-button type="primary">Profile</a-button>
+          <a-button type="primary">Logout</a-button>
         </div>
       </div>
     </Container>
@@ -24,8 +28,10 @@
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import Container from "./Container.vue"
+import AuthModal from "./AuthModal.vue"
 
 const searchUsername = ref("")
+const isAuthenticated = ref(false)
 
 const onSearch = () => {
 
@@ -45,6 +51,11 @@ const onSearch = () => {
 
 .left-content a {
   margin-right: 10px;
+}
+
+.right-content {
+  display: flex;
+  align-items: center;
 }
 
 .right-content button {
