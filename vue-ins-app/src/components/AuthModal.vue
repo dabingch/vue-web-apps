@@ -7,18 +7,40 @@
       <a-input
         class="input"
         v-if="!isLogin"
-        v-model:value="value"
+        v-model:value="userCredentials.username"
         placeholder="Username"
       />
-      <a-input class="input" v-model:value="value" placeholder="Email" />
-      <a-input class="input" v-model:value="value" placeholder="Password" />
+      <a-input
+        class="input"
+        v-model:value="userCredentials.email"
+        placeholder="Email"
+      />
+      <a-input
+        class="input"
+        v-model:value="userCredentials.password"
+        placeholder="Password"
+        type="password"
+      />
+      <a-typography-text type="danger" v-if="errorMessage">{{
+        errorMessage
+      }}</a-typography-text>
     </a-modal>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
+import { useUserStore } from "../stores/users";
+import { storeToRefs } from "pinia";
 
+const userStore = useUserStore();
+const { errorMessage } = storeToRefs(userStore);
+
+const userCredentials = reactive({
+  email: "",
+  password: "",
+  username: "",
+});
 const visible = ref(false);
 const props = defineProps(["isLogin"]);
 const title = props.isLogin ? "Login" : "Signup";
@@ -28,7 +50,8 @@ const showModal = () => {
 };
 
 const handleOk = (e) => {
-  visible.value = false;
+  // visible.value = false;
+  userStore.handleSignup(userCredentials);
 };
 </script>
 
