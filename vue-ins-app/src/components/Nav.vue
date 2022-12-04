@@ -5,7 +5,7 @@
         <div class="left-content">
           <RouterLink to="/">Instagram</RouterLink>
           <a-input-search
-            v-model="searchUsername"
+            v-model:value="searchUsername"
             placeholder="username..."
             style="width: 200px"
             @search="onSearch"
@@ -26,14 +26,20 @@
 
 <script setup>
 import { ref } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import Container from "./Container.vue";
 import AuthModal from "./AuthModal.vue";
 
 const searchUsername = ref("");
 const isAuthenticated = ref(false);
+const router = useRouter();
 
-const onSearch = () => {};
+const onSearch = () => {
+  if (searchUsername.value) {
+    router.push(`/profile/${searchUsername.value}`);
+  }
+  searchUsername.value = "";
+};
 </script>
 
 <style scoped>
