@@ -11,13 +11,15 @@
             @search="onSearch"
           />
         </div>
-        <div class="right-content" v-if="!isAuthenticated">
-          <AuthModal :isLogin="false" />
-          <AuthModal :isLogin="true" />
-        </div>
-        <div class="right-content" v-else>
-          <a-button type="primary">Profile</a-button>
-          <a-button type="primary">Logout</a-button>
+        <div v-if="!loadingUser" class="content">
+          <div class="right-content" v-if="!user">
+            <AuthModal :isLogin="false" />
+            <AuthModal :isLogin="true" />
+          </div>
+          <div class="right-content" v-else>
+            <a-button type="primary">Profile</a-button>
+            <a-button type="primary" @click="handleLogout">Logout</a-button>
+          </div>
         </div>
       </div>
     </Container>
@@ -29,16 +31,23 @@ import { ref } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 import Container from "./Container.vue";
 import AuthModal from "./AuthModal.vue";
+import { useUserStore } from "../stores/users";
+import { storeToRefs } from "pinia";
 
 const searchUsername = ref("");
-const isAuthenticated = ref(false);
 const router = useRouter();
+const userStore = useUserStore();
+const { user, loadingUser } = storeToRefs(userStore);
 
 const onSearch = () => {
   if (searchUsername.value) {
     router.push(`/profile/${searchUsername.value}`);
   }
   searchUsername.value = "";
+};
+
+const handleLogout = async () => {
+  await userStore.handleLogout();
 };
 </script>
 
@@ -64,5 +73,10 @@ const onSearch = () => {
 
 .right-content button {
   margin-left: 10px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
 }
 </style>
