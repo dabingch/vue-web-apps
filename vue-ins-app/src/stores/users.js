@@ -5,6 +5,7 @@ import { supabase } from "../supabase";
 export const useUserStore = defineStore("users", () => {
   const user = ref(null);
   const errorMessage = ref("");
+  const loading = ref(false);
 
   const validateEmail = (email) => {
     return String(email)
@@ -14,7 +15,45 @@ export const useUserStore = defineStore("users", () => {
       );
   };
 
-  const handleLogin = () => {};
+  const handleLogin = async (credentials) => {
+    const { email, password } = credentials;
+    if (!validateEmail(email)) {
+      return (errorMessage.value = "Email is invalid");
+    }
+
+    if (!password.length) {
+      return (errorMessage.value = "Password cannot be empty");
+    }
+
+    loading.value = true;
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      loading.value = false;
+      return (errorMessage.value = error.message);
+    }
+
+    const { data: existingUser } = await supabase
+      .from("users")
+      .select()
+      .eq("email", email)
+      .single();
+
+    console.log(existingUser);
+
+    user.value = {
+      id: existingUser.id,
+      email: existingUser.email,
+      username: existingUser.username,
+    };
+
+    loading.value = false;
+    errorMessage.value = "";
+  };
 
   const handleSignup = async (credentials) => {
     const { email, password, username } = credentials;
@@ -31,37 +70,69 @@ export const useUserStore = defineStore("users", () => {
       return (errorMessage.value = "Password must be at least 6 characters");
     }
 
-    errorMessage.value = "";
-
+    loading.value = true;
     // Check if user already exists
+
+    const { data } = await supabase
+      .from("users")
+      .select()
+      .eq("username", username)
+      .single();
+
+    if (data) {
+      loading.value = false;
+      return (errorMessage.value = "Username already exists");
+    }
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
     });
 
     if (error) {
+      loading.value = false;
       return (errorMessage.value = error.message);
     }
 
+    errorMessage.value = "";
+
     // Insert user in supabase postgreSQL
-    const res = await supabase.from("users").insert({
+    await supabase.from("users").insert({
       username,
       email,
     });
 
-    console.log(res);
+    const { data: newUser } = await supabase
+      .from("users")
+      .select()
+      .eq("email", email)
+      .single();
+
+    user.value = {
+      id: newUser.id,
+      email: newUser.email,
+      username: newUser.username,
+    };
+
+    loading.value = false;
   };
 
   const handleLogout = () => {};
 
   const getUser = () => {};
 
+  const clearErrorMessage = () => {
+    errorMessage.value = "";
+  };
+
   return {
     user,
     errorMessage,
+    loading,
     handleLogin,
     handleSignup,
     handleLogout,
     getUser,
+    clearErrorMessage,
   };
 });
