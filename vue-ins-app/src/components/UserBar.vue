@@ -1,7 +1,9 @@
 <template>
-  <div class="userbar-container">
+  <div class="userbar-container" v-if="props.user">
     <div class="top-content">
-      <a-typography-title :level="2">{{ props.username }}</a-typography-title>
+      <a-typography-title :level="2">{{
+        props.user.username
+      }}</a-typography-title>
       <UploadPhotoModal
         v-if="user && profileUsername === user.username"
         :addNewPost="addNewPost"
@@ -19,6 +21,11 @@
       >
     </div>
   </div>
+  <div class="userbar-container" v-else>
+    <div class="top-content">
+      <a-typography-title :level="2">User Not Found</a-typography-title>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -27,7 +34,7 @@ import { useRoute } from "vue-router";
 import { useUserStore } from "../stores/users";
 import { storeToRefs } from "pinia";
 
-const props = defineProps(["username", "userInfo", "addNewPost"]);
+const props = defineProps(["user", "userInfo", "addNewPost"]);
 const route = useRoute();
 const userStore = useUserStore();
 
