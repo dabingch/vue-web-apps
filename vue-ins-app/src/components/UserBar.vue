@@ -2,6 +2,7 @@
   <div class="userbar-container">
     <div class="top-content">
       <a-typography-title :level="2">{{ props.username }}</a-typography-title>
+      <UploadPhotoModal v-if="user && profileUsername === user.username" />
     </div>
     <div class="bottom-content">
       <a-typography-title :level="5"
@@ -18,7 +19,17 @@
 </template>
 
 <script setup>
+import UploadPhotoModal from "./UploadPhotoModal.vue";
+import { useRoute } from "vue-router";
+import { useUserStore } from "../stores/users";
+import { storeToRefs } from "pinia";
+
 const props = defineProps(["username", "userInfo"]);
+const route = useRoute();
+const userStore = useUserStore();
+
+const { username: profileUsername } = route.params;
+const { user } = storeToRefs(userStore);
 </script>
 
 <style scoped>
@@ -35,6 +46,12 @@ const props = defineProps(["username", "userInfo"]);
   margin: 0 !important;
   padding: 0;
   margin-right: 30px !important;
+  align-items: center;
+}
+
+.top-content {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 </style>
