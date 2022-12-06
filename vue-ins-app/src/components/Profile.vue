@@ -3,6 +3,7 @@
     <div class="profile-container">
       <UserBar
         :key="$route.params.username"
+        :addNewPost="addNewPost"
         username="dabing"
         :userInfo="{
           posts: 20,
@@ -10,20 +11,7 @@
           following: 100,
         }"
       />
-      <ImageGallary
-        :posts="[
-          {
-            id: 1,
-            image:
-              'https://gravatar.com/avatar/9ed1bddfefff8a20dfee2251a1e9c26c?s=400&d=wavatar&r=x',
-          },
-          {
-            id: 2,
-            image:
-              'https://gravatar.com/avatar/9ed1bddfefff8a20dfee2251a1e9c26c?s=400&d=wavatar&r=x',
-          },
-        ]"
-      />
+      <ImageGallary :posts="posts" />
     </div>
   </Container>
 </template>
@@ -32,6 +20,13 @@
 import Container from "./Container.vue";
 import ImageGallary from "./ImageGallary.vue";
 import UserBar from "./UserBar.vue";
+import { ref } from "vue";
+
+const posts = ref([]);
+
+const addNewPost = (post) => {
+  posts.value.unshift(post);
+};
 </script>
 
 <style scoped>

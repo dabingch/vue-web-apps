@@ -31,6 +31,7 @@ const caption = ref("");
 const file = ref(null);
 const loading = ref(false);
 const errorMessage = ref("");
+const props = defineProps(["addNewPost"]);
 
 const userStore = useUserStore();
 const { user } = storeToRefs(userStore);
@@ -43,7 +44,7 @@ const handleOk = async () => {
   if (file.value) {
     loading.value = true;
     const fileName = Math.floor(Math.random() * 10000000);
-    const { error } = await supabase.storage
+    const { data, error } = await supabase.storage
       .from("images")
       .upload("public/" + fileName, file.value);
 
@@ -60,9 +61,14 @@ const handleOk = async () => {
 
     loading.value = false;
     errorMessage.value = "";
-  }
+    visible.value = false;
+    caption.value = "";
 
-  // visible.value = false;
+    props.addNewPost({
+      url: data.path,
+      caption: caption.value,
+    });
+  }
 };
 
 const handleUploadChange = (e) => {
