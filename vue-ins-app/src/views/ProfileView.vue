@@ -4,6 +4,7 @@ import Profile from "../components/Profile.vue";
 
 <template>
   <main>
-    <Profile />
+    <!-- Render every time when the username is changed -->
+    <Profile :key="$route.params.username" />
   </main>
 </template>

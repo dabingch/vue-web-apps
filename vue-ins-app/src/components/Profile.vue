@@ -1,10 +1,13 @@
 <template>
   <Container>
     <div class="profile-container" v-if="!loading">
+      <!-- Rerender every time when the username is changed -->
       <UserBar
         :key="$route.params.username"
         :addNewPost="addNewPost"
         :user="user"
+        :isFollowing="isFollowing"
+        :updateIsFollowing="updateIsFollowing"
         :userInfo="{
           posts: 20,
           followers: 200,
@@ -23,13 +26,18 @@
 import Container from "./Container.vue";
 import ImageGallary from "./ImageGallary.vue";
 import UserBar from "./UserBar.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { supabase } from "../supabase";
 import { useRoute } from "vue-router";
+import { useUserStore } from "../stores/users";
+import { storeToRefs } from "pinia";
 
 const posts = ref([]);
+const userStore = useUserStore();
+const { user: loggedInUser } = storeToRefs(userStore);
 const user = ref(null);
 const loading = ref(false);
+const isFollowing = ref(false);
 const route = useRoute();
 const { username } = route.params;
 
@@ -55,12 +63,38 @@ const fetchData = async () => {
 
   posts.value = postsData;
 
+  await fetchIsFollowing();
+
   loading.value = false;
 };
 
 const addNewPost = (post) => {
   posts.value.unshift(post);
 };
+
+const updateIsFollowing = (follow) => {
+  isFollowing.value = follow;
+};
+
+const fetchIsFollowing = async () => {
+  if (loggedInUser.value && loggedInUser.value.id !== user.value.id) {
+    const { data } = await supabase
+      .from("followers_following")
+      .select()
+      .eq("follower_id", loggedInUser.value.id)
+      .eq("following_id", user.value.id)
+      .single();
+
+    // console.log(res)
+    if (data) {
+      isFollowing.value = true;
+    }
+  }
+};
+
+watch(loggedInUser, () => {
+  fetchIsFollowing();
+});
 
 onMounted(() => {
   fetchData();
