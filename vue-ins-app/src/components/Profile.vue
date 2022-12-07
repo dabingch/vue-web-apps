@@ -8,11 +8,7 @@
         :user="user"
         :isFollowing="isFollowing"
         :updateIsFollowing="updateIsFollowing"
-        :userInfo="{
-          posts: 20,
-          followers: 200,
-          following: 100,
-        }"
+        :userInfo="userInfo"
       />
       <ImageGallary :posts="posts" />
     </div>
@@ -26,13 +22,18 @@
 import Container from "./Container.vue";
 import ImageGallary from "./ImageGallary.vue";
 import UserBar from "./UserBar.vue";
-import { ref, onMounted, watch } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import { supabase } from "../supabase";
 import { useRoute } from "vue-router";
 import { useUserStore } from "../stores/users";
 import { storeToRefs } from "pinia";
 
 const posts = ref([]);
+const userInfo = reactive({
+  posts: null,
+  followers: null,
+  following: null,
+});
 const userStore = useUserStore();
 const { user: loggedInUser } = storeToRefs(userStore);
 const user = ref(null);
@@ -65,6 +66,13 @@ const fetchData = async () => {
 
   await fetchIsFollowing();
 
+  const followerCount = await fetchFollowersCount();
+  const followingCount = await fetchFollowingCount();
+
+  userInfo.followers = followerCount;
+  userInfo.following = followingCount;
+  userInfo.posts = posts.value.length;
+
   loading.value = false;
 };
 
@@ -90,6 +98,24 @@ const fetchIsFollowing = async () => {
       isFollowing.value = true;
     }
   }
+};
+
+const fetchFollowersCount = async () => {
+  const { count } = await supabase
+    .from("followers_following")
+    .select("*", { count: "exact" }) // select the exact count attribute
+    .eq("following_id", user.value.id);
+
+  return count;
+};
+
+const fetchFollowingCount = async () => {
+  const { count } = await supabase
+    .from("followers_following")
+    .select("*", { count: "exact" }) // select the exact count attribute
+    .eq("follower_id", user.value.id);
+
+  return count;
 };
 
 watch(loggedInUser, () => {
