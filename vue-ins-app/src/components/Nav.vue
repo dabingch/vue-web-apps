@@ -13,7 +13,9 @@
         </div>
         <div v-if="!loadingUser" class="content">
           <div class="right-content" v-if="!user">
+            <!-- Sign up -->
             <AuthModal :isLogin="false" />
+            <!-- Login -->
             <AuthModal :isLogin="true" />
           </div>
           <div class="right-content" v-else>

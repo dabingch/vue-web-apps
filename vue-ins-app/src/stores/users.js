@@ -73,7 +73,6 @@ export const useUserStore = defineStore("users", () => {
 
     loading.value = true;
     // Check if user already exists
-
     const { data } = await supabase
       .from("users")
       .select()

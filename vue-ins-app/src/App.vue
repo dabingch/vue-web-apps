@@ -1,11 +1,12 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 import Nav from "./components/Nav.vue";
 import { onMounted } from "vue";
 import { useUserStore } from "./stores/users";
 
 const userStore = useUserStore();
 
+// Try to get the user once the website mounted
 onMounted(() => {
   userStore.getUser();
 });
@@ -17,5 +18,3 @@ onMounted(() => {
     <RouterView />
   </main>
 </template>
-
-<style scoped></style>
