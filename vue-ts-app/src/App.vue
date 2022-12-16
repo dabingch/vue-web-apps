@@ -4,6 +4,8 @@ import Card from "./components/Card.vue";
 import { GENDER, type Invitee } from "./types";
 
 const name = ref("");
+const gender = ref(GENDER.MALE);
+const invitees = ref<Invitee[]>([]);
 
 const addInvitee = (): void => {
   if (name.value) {
@@ -36,10 +38,6 @@ const count = computed<{
     { male: 0, female: 0 }
   );
 });
-
-const gender = ref(GENDER.MALE);
-
-const invitees = ref<Invitee[]>([]);
 </script>
 
 <template>
