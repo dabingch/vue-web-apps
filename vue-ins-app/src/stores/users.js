@@ -17,6 +17,7 @@ export const useUserStore = defineStore("users", () => {
   };
 
   const handleLogin = async (credentials) => {
+    // Extract user input
     const { email, password } = credentials;
     if (!validateEmail(email)) {
       return (errorMessage.value = "Email is invalid");
@@ -28,6 +29,7 @@ export const useUserStore = defineStore("users", () => {
 
     loading.value = true;
 
+    // Sign in to the supabase
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -38,6 +40,7 @@ export const useUserStore = defineStore("users", () => {
       return (errorMessage.value = error.message);
     }
 
+    // Check if user exists in supabase postgreSQL
     const { data: existingUser } = await supabase
       .from("users")
       .select()
@@ -46,12 +49,14 @@ export const useUserStore = defineStore("users", () => {
 
     console.log(existingUser);
 
+    // Update state
     user.value = {
       id: existingUser.id,
       email: existingUser.email,
       username: existingUser.username,
     };
 
+    // Reset
     loading.value = false;
     errorMessage.value = "";
   };
@@ -102,6 +107,7 @@ export const useUserStore = defineStore("users", () => {
       email,
     });
 
+    // Get the new user from supabase postgreSQL
     const { data: newUser } = await supabase
       .from("users")
       .select()
@@ -123,6 +129,7 @@ export const useUserStore = defineStore("users", () => {
   };
 
   const getUser = async () => {
+    // Get current user from supabase
     loadingUser.value = true;
     const { data } = await supabase.auth.getUser();
 
