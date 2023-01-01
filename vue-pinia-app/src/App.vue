@@ -1,8 +1,11 @@
 <script setup>
 import { useTaskStore } from './stores/taskStore'
 import TaskDetails from './components/TaskDetails.vue'
+import { ref } from 'vue'
 
 const taskStore = useTaskStore()
+
+const showFav = ref(false)
 </script>
 
 <template>
@@ -12,8 +15,22 @@ const taskStore = useTaskStore()
 			<h2>{{ taskStore.name }}</h2>
 		</header>
 
-		<div class="task-list">
+		<nav class="filter">
+			<button v-if="!showFav" @click="showFav = !showFav">
+				Fav tasks
+			</button>
+			<button v-else @click="showFav = !showFav">All tasks</button>
+		</nav>
+
+		<div class="task-list" v-if="!showFav">
+			<p>You have {{ taskStore.totalCount }} tasks left to do</p>
 			<div v-for="task in taskStore.tasks" :key="task.id">
+				<TaskDetails :task="task" />
+			</div>
+		</div>
+		<div class="task-list" v-else>
+			<p>You have {{ taskStore.favCount }} fav tasks left to do</p>
+			<div v-for="task in taskStore.favs" :key="task.id">
 				<TaskDetails :task="task" />
 			</div>
 		</div>
