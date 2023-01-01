@@ -7,6 +7,8 @@ import { ref } from 'vue'
 const taskStore = useTaskStore()
 
 const showFav = ref(false)
+
+taskStore.getTasks()
 </script>
 
 <template>
@@ -27,16 +29,20 @@ const showFav = ref(false)
 			<button v-else @click="showFav = !showFav">All tasks</button>
 		</nav>
 
-		<div class="task-list" v-if="!showFav">
-			<p>You have {{ taskStore.totalCount }} tasks left to do</p>
-			<div v-for="task in taskStore.tasks" :key="task.id">
-				<TaskDetails :task="task" />
+		<div class="loading" v-if="taskStore.loading">Loading tasks...</div>
+
+		<div v-else>
+			<div class="task-list" v-if="!showFav">
+				<p>You have {{ taskStore.totalCount }} tasks left to do</p>
+				<div v-for="task in taskStore.tasks" :key="task.id">
+					<TaskDetails :task="task" />
+				</div>
 			</div>
-		</div>
-		<div class="task-list" v-else>
-			<p>You have {{ taskStore.favCount }} fav tasks left to do</p>
-			<div v-for="task in taskStore.favs" :key="task.id">
-				<TaskDetails :task="task" />
+			<div class="task-list" v-else>
+				<p>You have {{ taskStore.favCount }} fav tasks left to do</p>
+				<div v-for="task in taskStore.favs" :key="task.id">
+					<TaskDetails :task="task" />
+				</div>
 			</div>
 		</div>
 	</main>
