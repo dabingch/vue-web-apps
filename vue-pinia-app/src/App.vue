@@ -1,6 +1,7 @@
 <script setup>
 import { useTaskStore } from './stores/taskStore'
 import TaskDetails from './components/TaskDetails.vue'
+import TaskForm from './components/TaskForm.vue'
 import { ref } from 'vue'
 
 const taskStore = useTaskStore()
@@ -14,6 +15,10 @@ const showFav = ref(false)
 			<img src="./assets/pinia-logo.svg" alt="pinia logo" />
 			<h2>{{ taskStore.name }}</h2>
 		</header>
+
+		<div class="new-task-form">
+			<TaskForm />
+		</div>
 
 		<nav class="filter">
 			<button v-if="!showFav" @click="showFav = !showFav">
