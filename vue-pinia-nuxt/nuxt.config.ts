@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	modules: ['@nuxtjs/tailwindcss'],
+	modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
 	app: {
 		head: {
 			link: [
@@ -14,5 +14,9 @@ export default defineNuxtConfig({
 				},
 			],
 		},
+	},
+	// vue-pinia compatibility conflict with nuxt
+	alias: {
+		pinia: '/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs',
 	},
 })
