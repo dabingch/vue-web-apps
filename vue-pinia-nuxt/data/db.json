@@ -6,7 +6,7 @@
       "description": "Gain heat resistance for 3 minutes.",
       "img": "/img/potion.png",
       "id": 1,
-      "quantity": 1
+      "quantity": 4
     },
     {
       "title": "Poison Hammer",
@@ -14,7 +14,23 @@
       "description": "Hammer infused with posion gem magic.",
       "img": "/img/hammer.png",
       "id": 2,
-      "quantity": 2
+      "quantity": 3
+    },
+    {
+      "title": "Ring of Fortitude",
+      "price": 75,
+      "description": "Casts a magic protection barrier.",
+      "img": "/img/ring.png",
+      "id": 4,
+      "quantity": 3
+    },
+    {
+      "title": "Sun Shield",
+      "price": 50,
+      "description": "Shield passed down the by tribe of Ancients.",
+      "img": "/img/shield.png",
+      "id": 3,
+      "quantity": 4
     }
   ],
   "products": [
