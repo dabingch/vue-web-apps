@@ -1,14 +1,6 @@
 {
   "cart": [
     {
-      "title": "Lava Potion",
-      "price": 20,
-      "description": "Gain heat resistance for 3 minutes.",
-      "img": "/img/potion.png",
-      "id": 1,
-      "quantity": 4
-    },
-    {
       "title": "Poison Hammer",
       "price": 100,
       "description": "Hammer infused with posion gem magic.",
