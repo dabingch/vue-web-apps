@@ -7,7 +7,7 @@
 				</h1></NuxtLink
 			>
 			<NuxtLink to="/cart">
-				<span class="material-symbols-outlined text-secondary text-5xl">
+				<span class="material-icons-outlined text-secondary text-5xl">
 					shopping_bag
 				</span>
 			</NuxtLink>
