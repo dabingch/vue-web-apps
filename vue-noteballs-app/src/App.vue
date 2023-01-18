@@ -8,4 +8,6 @@ import { RouterLink, RouterView } from 'vue-router'
 	<RouterView />
 </template>
 
-<style scoped></style>
+<style>
+@import 'bulma/css/bulma.min.css';
+</style>
