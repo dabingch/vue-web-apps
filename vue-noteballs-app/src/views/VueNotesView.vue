@@ -14,7 +14,7 @@
 			<div class="field is-grouped is-grouped-right">
 				<div class="control">
 					<button
-						@click="addNote"
+						@click="handleAddNote"
 						:disabled="!newNote"
 						class="button is-link has-background-success"
 					>
@@ -37,30 +37,15 @@
 import { ref } from 'vue'
 
 import Note from '@/components/notes/Note.vue'
+import { useNotesStore } from '@/stores/notesStore'
 
-const notes = ref([
-	{
-		id: 1,
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-	},
-	{
-		id: 2,
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-	},
-	{
-		id: 3,
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-	},
-])
+const { notes, addNote } = useNotesStore()
 
 const newNote = ref('')
 const newNoteRef = ref(null)
 
-const addNote = () => {
-	notes.value.unshift({
-		id: notes.value.length + 1,
-		content: newNote.value,
-	})
+const handleAddNote = () => {
+	addNote(newNote.value)
 
 	newNote.value = ''
 	newNoteRef.value.focus()
