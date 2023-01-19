@@ -30,5 +30,10 @@ export const useNotesStore = defineStore('notes', {
 				content: noteToAdd,
 			})
 		},
+		deleteNote(idToDelete) {
+			console.log(this.notes.length)
+			this.notes = this.notes.filter((note) => note.id !== idToDelete)
+			console.log(this.notes.length)
+		},
 	},
 })

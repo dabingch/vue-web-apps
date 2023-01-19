@@ -24,34 +24,28 @@
 			</div>
 		</div>
 
-		<Note
-			v-for="note in notes"
-			:key="note.id"
-			:note="note"
-			@deleteClicked="deleteNote(note.id)"
-		/>
+		<Note v-for="note in notes" :key="note.id" :note="note" />
 	</div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 
 import Note from '@/components/notes/Note.vue'
 import { useNotesStore } from '@/stores/notesStore'
 
-const { notes, addNote } = useNotesStore()
+const { addNote } = useNotesStore()
+const notesStore = useNotesStore()
+// storeToRefs() is a helper function that converts a store to a reactive object
+const { notes } = storeToRefs(notesStore)
 
 const newNote = ref('')
 const newNoteRef = ref(null)
 
 const handleAddNote = () => {
 	addNote(newNote.value)
-
 	newNote.value = ''
 	newNoteRef.value.focus()
-}
-
-const deleteNote = (idToDelete) => {
-	notes.value = notes.value.filter((note) => note.id !== idToDelete)
 }
 </script>
