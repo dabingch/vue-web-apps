@@ -33,6 +33,7 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Note from '@/components/notes/Note.vue'
+
 import { useNotesStore } from '@/stores/notesStore'
 
 const { addNote } = useNotesStore()
