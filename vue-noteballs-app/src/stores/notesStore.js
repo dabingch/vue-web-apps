@@ -31,9 +31,17 @@ export const useNotesStore = defineStore('notes', {
 			})
 		},
 		deleteNote(idToDelete) {
-			console.log(this.notes.length)
 			this.notes = this.notes.filter((note) => note.id !== idToDelete)
-			console.log(this.notes.length)
+		},
+		findNoteById(idToFind) {
+			const note = this.notes.find((note) => note.id == idToFind)
+
+			return note
+		},
+		updateNote(noteToUpdate) {
+			const note = this.notes.find((note) => note.id == noteToUpdate.id)
+
+			note.content = noteToUpdate.content
 		},
 	},
 })
